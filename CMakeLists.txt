@@ -17,13 +17,14 @@ include_directories(ralloc)
 
 file(GLOB SOURCES "*.hpp")
 
-add_library(rdma STATIC ${SOURCES})
-set_target_properties(rdma PROPERTIES LINKER_LANGUAGE CXX)
-target_link_libraries(rdma -lpthread ibverbs ${RALLOC_LIB})
+add_library(rlib STATIC ${SOURCES})
+set_target_properties(rlib PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(rlib -lpthread ibverbs ${RALLOC_LIB})
+install(TARGETS rlib DESTINATION lib)
 
 add_executable(server "example/server.cpp")
 add_executable(client "example/client.cpp")
 
-target_link_libraries(server rdma)
-target_link_libraries(client rdma)
+target_link_libraries(server rlib)
+target_link_libraries(client rlib)
 

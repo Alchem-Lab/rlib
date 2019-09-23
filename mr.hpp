@@ -24,8 +24,9 @@ class Memory {
       len(len),
       mr(ibv_reg_mr(pd,addr,len,flag))
   {
+    RDMA_LOG(INFO) << "registering mr, for addr " << (void*)addr << "; len " << len;
     if(mr == nullptr) {
-      RDMA_LOG(WARNING) << "failed to register mr, for addr " << addr << "; len " << len;
+      RDMA_LOG(WARNING) << "failed to register mr, for addr " << (void*)addr << "; len " << len;
     } else {
       rattr.buf = (uintptr_t)addr;
       rattr.key = mr->rkey;

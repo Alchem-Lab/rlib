@@ -65,7 +65,7 @@ class QPImpl {
 
     auto socket = PreConnector::get_send_socket(ip,port);
     if(socket < 0) {
-      RDMA_LOG(3) << "get socket err";
+      // RDMA_LOG(3) << "get socket err";
       return ERR;
     }
 

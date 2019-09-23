@@ -264,6 +264,7 @@ class RdmaCtrl::RdmaCtrlImpl {
  QUERY_END:
     if(dev_list != nullptr)
       ibv_free_device_list(dev_list);
+    RDMA_ASSERT(res.size() > 0);
     return res;
   }
 
@@ -280,8 +281,9 @@ class RdmaCtrl::RdmaCtrlImpl {
   RdmaCtrl::DevIdx convert_port_idx(int idx) {
 
     if(cached_infos_.size() == 0)
-      query_devs();
+      cached_infos_ = query_devs();
 
+    RDMA_ASSERT(cached_infos_.size() != 0);
     for(int dev_id = 0; dev_id < cached_infos_.size();++dev_id) {
 
       int port_num = cached_infos_[dev_id].active_ports.size();
